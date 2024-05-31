@@ -1,0 +1,53 @@
+/* ----- Color ----- 
+
+    - #db1a5d
+    - 
+
+*/
+
+/*          Fonts            */
+
+@font-face {
+    font-family: IBM-TH;
+    src: url(../plugin/fonts/IBM_Plex_Sans_Thai/IBMPlexSansThai-Medium.ttf);
+}
+
+@font-face {
+    font-family: IBM;
+    src: url(../plugin/fonts/IBM_Plex_Sans/IBMPlexSans-Medium.ttf);
+}
+
+@font-face {
+    font-family: IBM-TH-bold;
+    src: url(../plugin/fonts/IBM_Plex_Sans_Thai/IBMPlexSansThai-Bold.ttf);
+}
+
+@font-face {
+    font-family: IBM-bold;
+    src: url(../plugin/fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+}
+
+/*          Main         */
+
+
+body {
+    font-family: IBM-TH, IBM;
+    background-image: url(../assets/bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.fs-bold {
+    font-family: IBM-TH-bold, IBM-bold !important;
+}
+
+.yrc-bg {
+    background-color: #db1a5d;
+}
+
+.full-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

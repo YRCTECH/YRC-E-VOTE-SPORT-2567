@@ -1,0 +1,50 @@
+/*              Login            */
+
+.login-asset {
+    border-radius: 1rem 0 0 1rem;
+    border-right: 1px solid #ccc;
+    width: 100vh;
+}
+
+.inp-login {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.inp-login:focus, .inp-login:active {
+    border: none;
+    border-bottom: 1px solid #db1a5d;
+    outline: none;
+}
+
+.btn-login {
+    background-color: #db1a5d;
+    border: #db1a5d;
+}
+
+.btn-login:hover {
+    background-color: #c2185b;
+    border: #c2185b;
+}
+
+
+.text-res {
+    font-size: 1.1rem;
+}
+
+/* Media Queries for Different Screen Sizes */
+@media (min-width: 768px) {
+    /* Medium-sized screens */
+    .text-res {
+        font-size: 1.4rem; /* Increase font size for medium-sized screens */
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large-sized screens */
+    .text-res {
+        font-size: 1.8rem; /* Increase font size for large-sized screens */
+    }
+}
