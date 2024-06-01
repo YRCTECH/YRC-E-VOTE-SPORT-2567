@@ -3,7 +3,7 @@
 .login-asset {
     border-radius: 1rem 0 0 1rem;
     border-right: 1px solid #ccc;
-    width: 100vh;
+    width: 90vh;
 }
 
 .inp-login {
@@ -29,22 +29,44 @@
     border: #c2185b;
 }
 
+.btn-login:focus, .btn-login:active {
+    background-color: #c2185b !important;
+    border: #c2185b !important;
+}
+
 
 .text-res {
-    font-size: 1.1rem;
+    font-size: 1.7rem;
 }
 
 /* Media Queries for Different Screen Sizes */
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
     /* Medium-sized screens */
     .text-res {
         font-size: 1.4rem; /* Increase font size for medium-sized screens */
     }
 }
 
-@media (min-width: 992px) {
+@media screen and (min-width: 992px) {
     /* Large-sized screens */
     .text-res {
-        font-size: 1.8rem; /* Increase font size for large-sized screens */
+        font-size: 1.6rem; /* Increase font size for large-sized screens */
+    }
+
+    .login-asset {
+        width: 140vh; /* Increase width for large-sized screens */
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    /* Extra large-sized screens */
+    .login-asset {
+        width: 120vh; /* Increase width for extra large-sized screens */
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .login-asset {
+        width: 100vh;
     }
 }

@@ -8,38 +8,39 @@
 /*          Fonts            */
 
 @font-face {
-    font-family: IBM-TH;
-    src: url(../plugin/fonts/IBM_Plex_Sans_Thai/IBMPlexSansThai-Medium.ttf);
+    font-family: LINE-TH;
+    src: url(../plugin/fonts/LINE_Seed_Sans_TH/Web/WOFF2/LINESeedSansTH_W_Rg.woff2);
 }
 
 @font-face {
-    font-family: IBM;
-    src: url(../plugin/fonts/IBM_Plex_Sans/IBMPlexSans-Medium.ttf);
+    font-family: LINE;
+    src: url(../plugin/fonts/LINE_Seed_Sans/Web/WOFF2/LINESeedSans_W_Rg.woff2);
 }
 
 @font-face {
-    font-family: IBM-TH-bold;
-    src: url(../plugin/fonts/IBM_Plex_Sans_Thai/IBMPlexSansThai-Bold.ttf);
+    font-family: LINE-TH-bold;
+    src: url(../plugin/fonts/LINE_Seed_Sans_TH/Web/WOFF2/LINESeedSansTH_W_Bd.woff2);
 }
 
 @font-face {
-    font-family: IBM-bold;
-    src: url(../plugin/fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+    font-family: LINE-bold;
+    src: url(../plugin/fonts/LINE_Seed_Sans/Web/WOFF2/LINESeedSans_W_Bd.woff2);
 }
 
 /*          Main         */
 
 
 body {
-    font-family: IBM-TH, IBM;
+    font-family: LINE-TH, LINE;
     background-image: url(../assets/bg.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
 }
 
 .fs-bold {
-    font-family: IBM-TH-bold, IBM-bold !important;
+    font-family: LINE-TH-bold, LINE-bold !important;
 }
 
 .yrc-bg {
@@ -50,4 +51,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+/********************** Sweet Alert **********************/
+
+.swal2-success-circular-line-right, .swal2-success-circular-line-left, .swal2-success-fix {
+    background-color: #fff !important;
+}
+
+.swal2-close:focus {
+	box-shadow: none;
 }
