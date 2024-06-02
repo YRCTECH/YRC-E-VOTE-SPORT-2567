@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2024 at 12:04 PM
+-- Generation Time: Jun 02, 2024 at 08:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `e-vote-sport`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `ad_id` int(11) NOT NULL,
+  `ad_name` varchar(255) NOT NULL,
+  `ad_password` varchar(255) NOT NULL,
+  `ad_username` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`ad_id`, `ad_name`, `ad_password`, `ad_username`) VALUES
+(1, 'YRCadmin', '75224011', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -3618,6 +3638,12 @@ INSERT INTO `student` (`st_id`, `st_idstudent`, `st_password`, `st_title`, `st_n
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`ad_id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -3629,6 +3655,12 @@ ALTER TABLE `student`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `student`
