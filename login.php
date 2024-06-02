@@ -31,7 +31,7 @@
             <form action="./process/login_db.php" method="post" class="p-5 pb-1 pt-4 d-flex flex-column" style="min-height: 100%;">
                 <!-- Logo -->
                 <div class="mb-4">
-                    <img src="./assets/logo2.png" alt="" class="col-4 m-auto d-block">
+                    <img src="./assets/logo2.png" alt="" class="col-4 col-lg-3 m-auto d-block">
                 </div>
 
                 <!-- Title -->
@@ -92,7 +92,7 @@
             icon: 'error',
             title: 'เกิดข้อผิดพลาด',
             text: '<?php echo $_SESSION['error']; unset($_SESSION['error']) ?>',
-            timer: 1500
+            timer: 2000
         }).then(() => {
             window.location.href = './login.php';
         });
@@ -102,7 +102,7 @@
         Swal.fire({
                 icon: 'success',
                 title: 'เข้าสู่ระบบสำเร็จ',
-                timer: 1500
+                timer: 2000
             }).then(() => {
                 window.location.href = './index.php';
             });

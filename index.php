@@ -31,7 +31,7 @@ require_once './function/student.php';
     <?php include_once './component/navbar.php' ?>
 
     <!-- Box -->
-    <div class="w-100 p-5 d-block d-lg-flex gap-5 justify-content-center" style="min-height: 80vh;">
+    <div class="w-100 p-4 p-lg-5 d-block d-lg-flex gap-5 justify-content-center" style="min-height: 80vh;">
         <!-- Infomation -->
         <div class="col-12 col-lg-3 d-block bg-white shadow-lg rounded-4 mb-5 mb-lg-auto" style="padding: 30px;">
             <h4 class="fs-bold mb-3">ข้อมูลส่วนตัว</h4>
@@ -95,4 +95,16 @@ require_once './function/student.php';
         });
     });
 </script>
+<!-- Login success -->
+<?php if (isset($_GET["success"])) { ?>
+    <script>
+        Swal.fire({
+                icon: 'success',
+                title: 'เข้าสู่ระบบสำเร็จ',
+                timer: 2000
+            }).then(() => {
+                window.location.href = './index.php';
+            });
+    </script>
+<?php } ?>
 </html>
