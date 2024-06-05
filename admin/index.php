@@ -1,5 +1,6 @@
 <?php require_once '../server/connet.php'; 
 require_once '../function/admin.php';
+require_once '../function/student.php';
 
     // Check for login
     if (empty($_SESSION['admin_ID'])) {
@@ -15,7 +16,11 @@ require_once '../function/admin.php';
     $admin_ID = $_SESSION['admin_ID'];
     $admin = new Admin_func();
     $admin_data = $admin->getAdminData($admin_ID);
-    
+
+    // Get student information
+    $student = new Student_func();
+    $num_row_student = $student->getNumRowStudent();
+    $num_row_vote = $student->getNumRowVote();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,12 +43,75 @@ require_once '../function/admin.php';
 
     <!-- Content -->
     <div class="content-wrapper">
-        dasdasdasd
+        <!-- Content header -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <!-- Count Student -->
+                    <div class="col-12 col-md d-flex align-items-stretch">
+                        <div class="info-box bg-info flex-fill">
+                            <span class="info-box-icon"><i class="fa-solid fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">จำนวนนักเรียนทั้งหมด</span>
+                                <span class="info-box-number"><?php echo $num_row_student ?> คน</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Count Vote -->
+                    <div class="col-12 col-md d-flex align-items-stretch">
+                        <div class="info-box bg-success flex-fill">
+                            <span class="info-box-icon"><i class="fa-solid fa-check-to-slot"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">จำนวนนักเรียนที่โหวต</span>
+                                <span class="info-box-number"><?php echo $num_row_vote ?> คน</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: <?php echo ($num_row_vote / $num_row_student) * 100 ?>%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <!-- Chart level vote -->
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">จำนวนนักเรียนที่โหวดในแต่ละระดับชั้น</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa-solid fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="chart">
+                                            <canvas id="LevelVote"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
     </div>
 
     <!-- Footer -->
     <?php include_once './component/footer.php' ?>
 </body>
+<script src="../plugin/ChartJS/chart.js"></script>
 <script src="../plugin/sweetalert2/sweetalert2.min.js"></script>
 <script src="../plugin/jquery.js"></script>
 <script src="../plugin/adminlte/adminlte.min.js"></script>
@@ -73,12 +141,45 @@ require_once '../function/admin.php';
                             text: "กำลังออกจากระบบ...",
                             icon: 'success',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                         }).then((result) => {
                             location.href = './login.php';
                         });
                     }
                 });
+            }
+        });
+    });
+
+    // Level Vote
+    $(document).ready(function() {
+        var ctx = document.getElementById('LevelVote');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: ['ม.1', 'ม.2', 'ม.3', 'ม.4', 'ม.5', 'ม.6'],
+            datasets: [{
+                label: 'จำนวนนักเรียน',
+                data: [<?php echo $student->getNumVoteWithLevel(1) ?>, 
+                        <?php echo $student->getNumVoteWithLevel(2) ?>, 
+                        <?php echo $student->getNumVoteWithLevel(3) ?>, 
+                        <?php echo $student->getNumVoteWithLevel(4) ?>, 
+                        <?php echo $student->getNumVoteWithLevel(5) ?>, 
+                        <?php echo $student->getNumVoteWithLevel(6) ?>],
+                borderWidth: 1
+            }]
+            },
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
             }
         });
     });
