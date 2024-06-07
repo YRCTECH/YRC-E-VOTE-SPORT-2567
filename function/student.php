@@ -68,4 +68,17 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        // Get status vote
+        public function getStatusVote() {
+            try {
+                $sql = "SELECT * FROM settings WHERE setting_id = 1";
+                $query = $this->conn->prepare($sql);
+                $query->execute();
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }
