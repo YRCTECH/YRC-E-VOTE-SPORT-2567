@@ -1,3 +1,29 @@
+<?php
+
+  // Check for login
+  if (empty($_SESSION['admin_ID'])) {
+    header('location: ./login.php');
+  }
+
+  // Check for rank
+  if ($_SESSION['rank'] != 'admin') {
+    header('location: ../index.php');
+  }
+
+  // Get admin data
+  $admin_ID = $_SESSION['admin_ID'];
+  $admin = new Admin_func();
+  $admin_data = $admin->getAdminData($admin_ID);
+
+  // Get student information
+  $student = new Student_func();
+  $num_row_student = $student->getNumRowStudent();
+  $num_row_vote = $student->getNumRowVote();
+
+  // Get vote status
+  $setting = $admin->getSetting();
+
+?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->

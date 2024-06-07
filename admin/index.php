@@ -1,26 +1,6 @@
 <?php require_once '../server/connet.php'; 
 require_once '../function/admin.php';
 require_once '../function/student.php';
-
-    // Check for login
-    if (empty($_SESSION['admin_ID'])) {
-        header('location: ./login.php');
-    }
-
-    // Check for rank
-    if ($_SESSION['rank'] != 'admin') {
-        header('location: ../index.php');
-    }
-
-    // Get admin data
-    $admin_ID = $_SESSION['admin_ID'];
-    $admin = new Admin_func();
-    $admin_data = $admin->getAdminData($admin_ID);
-
-    // Get student information
-    $student = new Student_func();
-    $num_row_student = $student->getNumRowStudent();
-    $num_row_vote = $student->getNumRowVote();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +40,7 @@ require_once '../function/student.php';
 
                     <!-- Count Vote -->
                     <div class="col-12 col-md d-flex align-items-stretch">
-                        <div class="info-box bg-success flex-fill">
+                        <div class="info-box bg-warning flex-fill">
                             <span class="info-box-icon"><i class="fa-solid fa-check-to-slot"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">จำนวนนักเรียนที่โหวต</span>
@@ -71,6 +51,20 @@ require_once '../function/student.php';
                             </div>
                         </div>
                     </div>
+
+                    <!-- Vote Status -->
+                    <div class="col-12 col-md d-flex align-items-stretch">
+                        <div id="voteStatusBtn" class="info-box <?php echo $setting["setting_status"] == "ON" ? "bg-success" : "bg-danger" ?> flex-fill">
+                            <span class="info-box-icon" id="voteStatusIcon">
+                                <?php echo $setting["setting_status"] == "ON" ? '<i class="fa-solid fa-unlock"></i>' : '<i class="fa-solid fa-lock"></i>' ?>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">สถานะ</span>
+                                <span class="info-box-number" id="voteStatusText"><?php echo $setting["setting_status"] == "ON" ? "เปิดโหวด" : "ปิดโหวด" ?></span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -116,41 +110,8 @@ require_once '../function/student.php';
 <script src="../plugin/jquery.js"></script>
 <script src="../plugin/adminlte/adminlte.min.js"></script>
 <script src="../plugin/bootstrap-5.3.3-dist/bootstrap.bundle.min.js"></script>
+<!-- index -->
 <script>
-    // Logout
-    $("#logout").click(function() {
-        Swal.fire({
-            title: 'ออกจากระบบ',
-            text: "คุณต้องการออกจากระบบหรือไม่?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'ออกจากระบบ',
-            cancelButtonText: 'ยกเลิก'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "POST",
-                    url: "../process/logout_db.php",
-                    data: {
-                        logout: true
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            title: 'ออกจากระบบสำเร็จ',
-                            text: "กำลังออกจากระบบ...",
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then((result) => {
-                            location.href = './login.php';
-                        });
-                    }
-                });
-            }
-        });
-    });
-
     // Level Vote
     $(document).ready(function() {
         var ctx = document.getElementById('LevelVote');
@@ -194,5 +155,75 @@ require_once '../function/student.php';
             window.location.href = './index.php';
         });
     <?php } ?>
+</script>
+<!-- Everypage -->
+<script>
+    // Logout
+    $("#logout").click(function() {
+        Swal.fire({
+            title: 'ออกจากระบบ',
+            text: "คุณต้องการออกจากระบบหรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'ออกจากระบบ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "../process/logout_db.php",
+                    data: {
+                        logout: true
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'ออกจากระบบสำเร็จ',
+                            text: "กำลังออกจากระบบ...",
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then((result) => {
+                            location.href = './login.php';
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    // Change status vote
+    $("#changeStatus").click(function() {
+        var status = "<?php echo $setting["setting_status"] == "ON" ? "OFF" : "ON" ?>";
+        Swal.fire({
+            title: 'เปลี่ยนสถานะโหวด',
+            text: "คุณต้องการเปลี่ยนสถานะโหวดหรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'เปลี่ยนสถานะ',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "../process/admin/changeStatusVote_db.php",
+                    data: {
+                        status: status
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'เปลี่ยนสถานะโหวดสำเร็จ',
+                            text: "กำลังเปลี่ยนสถานะโหวด...",
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then((result) => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+        })
+    });
 </script>
 </html>

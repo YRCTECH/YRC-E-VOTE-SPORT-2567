@@ -29,4 +29,29 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        // Get setting
+        public function getSetting() {
+            try {
+                $sql = "SELECT * FROM `settings`";
+                $query = $this->conn->prepare($sql);
+                $query->execute();
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        // Change status vote
+        public function changeStatusVote($status) {
+            try {
+                $sql = "UPDATE `settings` SET setting_status = :statusVote";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(':statusVote', $status, PDO::PARAM_STR);
+                $query->execute();
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }

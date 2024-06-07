@@ -26,6 +26,15 @@
 
     <!-- Bottom sidebar -->
     <div class="mt-auto sidebar mb-3">
+        <!-- Chage mode status -->
+        <div class="mb-3">
+            <button type="submit" id="changeStatus" class="text-white bg-gray btn w-100 align-items-center">
+                <?php echo $setting["setting_status"] == "ON" ? '<i class="fa-solid fa-unlock"></i>' : '<i class="fa-solid fa-lock"></i>' ?>
+                <span id="voteStatusText" class="ps-1">เปลี่ยนสถานะระบบโหวด</span>
+            </button>
+        </div>
+
+        <!-- Logout -->
         <button type="submit" id="logout" class="text-white bg-danger btn w-100"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
     </div>
     <!-- /.sidebar -->
