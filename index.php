@@ -1,5 +1,16 @@
 <?php require_once './server/connet.php'; 
 require_once './function/student.php';
+require_once './function/getColor.php';
+
+// Call class
+$student = new Student_func();
+
+// Set color team from session
+$color = $_SESSION["t_color"];
+
+// Get Candidate
+$candidates = $student->getCandidateData($color);
+$candidates_num = $candidates->rowCount();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,28 +24,90 @@ require_once './function/student.php';
     <link rel="stylesheet" href="./plugin/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="./plugin/adminlte/adminlte.min.css">
     <link rel="stylesheet" href="./dist/style.css">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 300px;
+        }
+
+        .ca-img, .ca-text {
+            transition: 0.3s;
+        }
+
+        .ca-img:hover {
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.3);
+        }
+
+        .ca-text:hover {
+            color: <?php getColorText($color) ?>;
+        }
+
+        .blur {
+            filter: blur(5px);
+        }
+    </style>
 </head>
 <body class="d-flex flex-column">
     <!-- Navbar -->
     <?php include_once './component/navbar.php' ?>
 
     <!-- Box -->
-    <div class="w-100 p-4 p-lg-5 d-block d-lg-flex gap-5 justify-content-center" style="min-height: 80vh;">
+    <div class="w-100 p-4 p-lg-5 d-block d-lg-flex gap-5 justify-content-center">
         <!-- Infomation -->
         <div class="col-12 col-lg-3 d-block bg-white shadow-lg rounded-4 mb-5 mb-lg-auto" style="padding: 30px;">
             <h4 class="fs-bold mb-3">ข้อมูลส่วนตัว</h4>
             <p>ชื่อ <?php echo $studentData["st_title"] ?><?php echo $studentData["st_name"] ?> <?php echo $studentData["st_surname"] ?></p>
             <p>รหัสนักเรียน <?php echo $studentData["st_idstudent"] ?></p>
             <p>ระดับชั้น ม.<?php echo $studentData["st_level"] ?>/<?php echo $studentData["st_room"] ?> เลขที่ <?php echo $studentData["st_number"] ?></p>
+
+            <!-- Status vote -->
+            <?php if ($studentData["st_vote"] == 1) { ?>
+                <p class="text-success">สถานะ: <b>เลือกตั้งแล้ว</b></p>
+                <button class="btn btn-danger fs-6">ยกเลิกการโหวด</button>
+            <?php } else { ?>
+                <p class="text-danger">สถานะ: <b>ยังไม่เลือกตั้ง</b></p>
+            <?php } ?>
+
+            <!-- Logout -->
             <button type="submit" id="logout" class="text-white bg-danger btn"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
         </div>
 
         <!-- Body -->
-        <div class="col-12 col-lg-8 d-block shadow-lg rounded-4 bg-white p-4" style="height: 90vh;"> <!-- Fix height -->
+        <div class="col-12 col-lg-8 d-block shadow-lg rounded-4 bg-white p-4">
 
-            <!-- Status -->
-            <?php include_once './component/success.php' ?>
-            <?php include_once './component/error.php' ?>
+            <!-- Title -->
+            <div class="mb-0 mb-md-4">
+                <h4 class="fs-bold text-center">เลือกตั้งประธานสี<br><b style="color: <?php getColorText($color) ?>;"><?php getNameColor($color) ?></b></h4>
+            </div>
+
+            <!-- Read candidates -->
+            <?php if ($candidates_num % 2 == 0) { ?>
+                <div class="row row-cols-1 row-cols-md-2">
+                    <?php while ($row = $candidates->fetch(PDO::FETCH_ASSOC)) { ?>
+                        <div class="col mt-5 mt-md-4">
+                            <div class="col-12 col-md-10 col-xl-8 h-100 m-auto candidate">
+                                <img src="./candidates/<?php echo htmlspecialchars($row['ca_image']); ?>" alt="Candidate Image" class="card-img-top w-100 rounded-4 ca-img">
+                                <div class="card-body p-0 pt-3">
+                                    <p class="text-center h5 ca-text">หมายเลข <?php echo htmlspecialchars($row['ca_number']); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } else { ?>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <?php while ($row = $candidates->fetch(PDO::FETCH_ASSOC)) { ?>
+                        <div class="col mt-5 mt-md-0">
+                            <div class="col-12 col-md-10 col-lg-12 col-xl-10 h-100 m-auto candidate">
+                                <img src="./candidates/<?php echo htmlspecialchars($row['ca_image']); ?>" alt="Candidate Image" class="card-img-top w-100 rounded-4 ca-img">
+                                <div class="card-body p-0 pt-3">
+                                    <p class="text-center h5 ca-text">หมายเลข <?php echo htmlspecialchars($row['ca_number']); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } ?>
             
         </div>
     </div>
@@ -83,6 +156,19 @@ require_once './function/student.php';
             }
         });
     });
+
+    // Hover effects
+    $(".candidate").hover(
+        function() {
+            $(".candidate").not(this).find(".ca-img, .ca-text").addClass("blur");
+            $(this).find(".ca-img").addClass("highlight");
+            $(this).find(".ca-text").addClass("highlight-text");
+        }, function() {
+            $(".candidate").not(this).find(".ca-img, .ca-text").removeClass("blur");
+            $(this).find(".ca-img").removeClass("highlight");
+            $(this).find(".ca-text").removeClass("highlight-text");
+        }
+    );
 </script>
 
 <!-- index -->

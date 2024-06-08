@@ -81,4 +81,17 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        // Get candidate data
+        public function getCandidateData($color_t) {
+            try {
+                $sql = "SELECT * FROM candidates WHERE ca_color = :color";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":color", $color_t, PDO::PARAM_STR);
+                $query->execute();
+                return $query;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }
