@@ -64,7 +64,7 @@ $candidates_num = $candidates->rowCount();
     <div class="w-100 p-4 p-lg-5 d-block d-lg-flex gap-5 justify-content-center">
         <!-- Infomation -->
         <div class="col-12 col-lg-3 d-block bg-white shadow-lg rounded-4 mb-5 mb-lg-auto" style="padding: 30px;">
-            <h4 class="fs-bold mb-3">ข้อมูลส่วนตัว</h4>
+            <h4 class="fs-bold mb-3">ข้อมูลผู้ใช้</h4>
             <p>ชื่อ <?php echo $studentData["st_title"] ?><?php echo $studentData["st_name"] ?> <?php echo $studentData["st_surname"] ?></p>
             <p>รหัสนักเรียน <?php echo $studentData["st_idstudent"] ?></p>
             <p>ระดับชั้น ม.<?php echo $studentData["st_level"] ?>/<?php echo $studentData["st_room"] ?> เลขที่ <?php echo $studentData["st_number"] ?></p>
@@ -86,7 +86,7 @@ $candidates_num = $candidates->rowCount();
 
             <!-- Title -->
             <div class="mb-0 mb-md-4">
-                <h4 class="fs-bold text-center">เลือกตั้งประธานสี<br><b style="color: <?php getColorText($color) ?>;"><?php getNameColor($color) ?></b></h4>
+                <h4 class="fs-bold text-center">ระบบเลือกตั้งประธานสี<br><b style="color: <?php getColorText($color) ?>;"><?php getNameColor($color) ?></b></h4>
             </div>
 
             <!-- Read candidates -->
@@ -280,6 +280,26 @@ $candidates_num = $candidates->rowCount();
                 });
             }
         });
+    });
+
+    // How to use
+    function showHowToUse() {
+        Swal.fire({
+            title: 'วิธีการใช้งาน',
+            html: `
+            <div style="text-align: left;" class="col-11 m-auto">
+                <p>1. คลิกที่รูปภาพของผู้สมัครประธานสีที่คุณต้องการโหวต</p>
+                <p>2. กดยืนยันการโหวต</p>
+            </div>
+            `,
+            icon: 'info',
+            confirmButtonColor: '<?php getColorText($color) ?>',
+            confirmButtonText: 'ปิด'
+        });
+    }
+
+    $(".Howtouse").click(function() {
+        showHowToUse();
     });
 
 </script>

@@ -31,7 +31,7 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item d-block">
-                <p class="m-0 nav-link"><?php echo $studentData["st_idstudent"] ?></p>
+                <p class="m-0 nav-link Howtouse" style="cursor: pointer;">วิธีการใช้งาน</p>
             </li>
         </ul>
     </nav>
