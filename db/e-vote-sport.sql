@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 07, 2024 at 12:42 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: Jun 09, 2024 at 11:45 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -94,7 +94,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`setting_id`, `setting_name`, `setting_status`) VALUES
-(1, 'เปิด-ปิด ระบบโหวด', 'ON');
+(1, 'เปิด-ปิด ระบบโหวต', 'ON');
 
 -- --------------------------------------------------------
 
@@ -3698,7 +3698,8 @@ INSERT INTO `student` (`st_id`, `st_idstudent`, `st_password`, `st_title`, `st_n
 CREATE TABLE `votehis` (
   `v_id` int(11) NOT NULL,
   `v_idstudent` varchar(255) NOT NULL,
-  `v_vote` varchar(5) NOT NULL,
+  `v_candidate` varchar(5) NOT NULL,
+  `v_color` varchar(10) NOT NULL,
   `v_votetime` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -3771,7 +3772,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `votehis`
 --
 ALTER TABLE `votehis`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
