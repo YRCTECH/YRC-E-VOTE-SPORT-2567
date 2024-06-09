@@ -34,6 +34,7 @@ try {
                     "status" => "success",
                     "message" => "ขอบคุณสำหรับการโหวตของคุณ"
                 );
+                echo json_encode($data);
                 exit();
             }
         } else {

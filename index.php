@@ -197,11 +197,11 @@ $candidates_num = $candidates->rowCount();
     $(".candidate").click(function() {
         Swal.fire({
             title: 'เลือกตั้ง',
-            text: "คุณต้องการเลือกหมายเลข " + $(this).find(".ca-text").text().split(" ")[1] + " ใช่หรือไม่?",
+            text: "คุณต้องกาโหวต หมายเลข " + $(this).find(".ca-text").text().split(" ")[1] + " ใช่หรือไม่?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '<?php getColorText($color) ?>',
-            confirmButtonText: 'ยืนยันการเลือก',
+            confirmButtonText: 'ยืนยันการโหวต',
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -219,7 +219,7 @@ $candidates_num = $candidates->rowCount();
                             title: 'เลือกตั้งไม่สำเร็จ',
                             text: data.message,
                             icon: 'error',
-                            confirmButtonColor: "gray",
+                            confirmButtonColor: "<?php getColorText($color) ?>",
                             timer: 2000
                         });
                     } else {
@@ -237,6 +237,50 @@ $candidates_num = $candidates->rowCount();
             }
         });
     })
+
+    // Cancel vote
+    $(".cancel-vote").click(function() {
+        Swal.fire({
+            title: 'ยกเลิกการโหวต',
+            text: "คุณต้องการยกเลิกการโหวตใช่หรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '<?php getColorText($color) ?>',
+            confirmButtonText: 'ยืนยันการยกเลิก',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "./process/cancel_vote_db.php",
+                    data: {
+                        cancelvote: true
+                    }
+                }).then((response) => {
+                    var data = JSON.parse(response);
+                    if (data.status == "error") {
+                        Swal.fire({
+                            title: 'ยกเลิกการโหวตไม่สำเร็จ',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonColor: "<?php getColorText($color) ?>",
+                            timer: 2000
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: "ยกเลิกการโหวตสำเร็จ",
+                            icon: 'success',
+                            confirmButtonColor: '<?php getColorText($color) ?>',
+                            timer: 2000
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    });
 
 </script>
 </html>

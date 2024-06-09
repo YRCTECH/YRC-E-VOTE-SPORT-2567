@@ -27,7 +27,7 @@
         $color = $_SESSION["t_color"];
         switch ($color) {
             case "yellow":
-                echo "#ffc107";
+                echo "#e3aa00";
                 break;
             case "green":
                 echo "#198754";
