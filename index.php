@@ -45,6 +45,15 @@ $candidates_num = $candidates->rowCount();
         .blur {
             filter: blur(5px);
         }
+
+        .candidate {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .candidate:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="d-flex flex-column">
@@ -63,7 +72,7 @@ $candidates_num = $candidates->rowCount();
             <!-- Status vote -->
             <?php if ($studentData["st_vote"] == 1) { ?>
                 <p class="text-success">สถานะ: <b>เลือกตั้งแล้ว</b></p>
-                <button class="btn btn-danger fs-6">ยกเลิกการโหวด</button>
+                <button class="btn btn-secondary cancel-vote">ยกเลิกการโหวต</button>
             <?php } else { ?>
                 <p class="text-danger">สถานะ: <b>ยังไม่เลือกตั้ง</b></p>
             <?php } ?>
@@ -156,6 +165,20 @@ $candidates_num = $candidates->rowCount();
             }
         });
     });
+</script>
+
+<!-- index -->
+<script>
+    // Login Success
+    <?php if (isset($_GET["success"]) && $_GET["success"] == "loginsuccess") { ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'เข้าสู่ระบบสำเร็จ',
+            timer: 2000
+        }).then(() => {
+            window.location.href = './index.php';
+        });
+    <?php } ?>
 
     // Hover effects
     $(".candidate").hover(
@@ -169,19 +192,51 @@ $candidates_num = $candidates->rowCount();
             $(this).find(".ca-text").removeClass("highlight-text");
         }
     );
-</script>
 
-<!-- index -->
-<script>
-    // Login Success
-    <?php if (isset($_GET["success"])) { ?>
+    // Click candidate
+    $(".candidate").click(function() {
         Swal.fire({
-            icon: 'success',
-            title: 'เข้าสู่ระบบสำเร็จ',
-            timer: 2000
-        }).then(() => {
-            window.location.href = './index.php';
+            title: 'เลือกตั้ง',
+            text: "คุณต้องการเลือกหมายเลข " + $(this).find(".ca-text").text().split(" ")[1] + " ใช่หรือไม่?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '<?php getColorText($color) ?>',
+            confirmButtonText: 'ยืนยันการเลือก',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "./process/vote_db.php",
+                    data: {
+                        vote: true,
+                        candidate: $(this).find(".ca-text").text().split(" ")[1]
+                    }
+                }).then((response) => {
+                    var data = JSON.parse(response);
+                    if (data.status == "error") {
+                        Swal.fire({
+                            title: 'เลือกตั้งไม่สำเร็จ',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonColor: "gray",
+                            timer: 2000
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'เลือกตั้งสำเร็จ',
+                            text: "ขอบคุณสำหรับการโหวตของคุณ",
+                            icon: 'success',
+                            confirmButtonColor: '<?php getColorText($color) ?>',
+                            timer: 2000
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
         });
-    <?php } ?>
+    })
+
 </script>
 </html>

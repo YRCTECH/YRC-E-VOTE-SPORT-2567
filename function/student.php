@@ -94,4 +94,72 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        // Vote candidate
+        public function voteCandidate($student_ID, $candidate_number, $color_t) {
+            try {
+                $sql = "INSERT INTO votehis (v_idstudent, v_candidate, v_color) VALUES (:student_ID, :candidate_number, :color_t)";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->bindParam(":candidate_number", $candidate_number, PDO::PARAM_STR);
+                $query->bindParam(":color_t", $color_t, PDO::PARAM_STR);
+                $query->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        // Update vote status
+        public function updateVoteStatus($student_ID) {
+            try {
+                $sql = "UPDATE student SET st_vote = 1 WHERE st_idstudent = :student_ID";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        // Check vote
+        public function checkVote($student_ID) {
+            try {
+                $sql = "SELECT * FROM votehis WHERE v_idstudent = :student_ID";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->execute();
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        // Cancel vote
+        public function cancelVote($student_ID) {
+            try {
+                $sql = "DELETE FROM votehis WHERE v_idstudent = :student_ID";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        // Update vote status for cancel
+        public function updateVoteStatusForCancel($student_ID) {
+            try {
+                $sql = "UPDATE student SET st_vote = 0 WHERE st_idstudent = :student_ID";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->execute();
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }

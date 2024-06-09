@@ -29,8 +29,7 @@ try {
                 $_SESSION['student_ID'] = $login['st_idstudent'];
                 $_SESSION["t_color"] = $login["st_colort"];
                 $_SESSION["rank"] = "student";
-                $_SESSION['success'] = 'เข้าสู่ระบบสำเร็จ';
-                header("location: ../index.php?success=1");
+                header("location: ../index.php?success=loginsuccess");
                 exit();
             }
         } else {
