@@ -11,11 +11,32 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                <!-- Homepage -->
                 <li class="nav-item">
                     <a href="./index.php" class="nav-link">
                         <i class="nav-icon fa-solid fa-house"></i>
                         <p>
                             หน้าหลัก
+                        </p>
+                    </a>
+                </li>
+
+                <!-- Vote history -->
+                <li class="nav-item">
+                    <a href="./votehistory.php" class="nav-link">
+                        <i class="nav-icon fa-solid fa-check-to-slot"></i>
+                        <p>
+                            ประวัติการโหวต
+                        </p>
+                    </a>
+                </li>
+
+                <!-- Top vote -->
+                <li class="nav-item">
+                    <a href="./topvote.php" class="nav-link">
+                        <i class="nav-icon fa-solid fa-star text-warning"></i>
+                        <p>
+                            ผลโหวดยอดนิยม
                         </p>
                     </a>
                 </li>

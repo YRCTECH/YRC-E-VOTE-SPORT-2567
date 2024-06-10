@@ -22,6 +22,27 @@
         }
     }
 
+    // Translate color
+    function getTranslateColor($color) {
+        switch ($color) {
+            case "yellow":
+                echo "สีเหลือง";
+                break;
+            case "green":
+                echo "สีเขียว";
+                break;
+            case "red":
+                echo "สีแดง";
+                break;
+            case "blue":
+                echo "สีฟ้า";
+                break;
+            case "purple":
+                echo "สีม่วง";
+                break;
+        }
+    }
+
     // Get color text
     function getColorText() {
         $color = $_SESSION["t_color"];

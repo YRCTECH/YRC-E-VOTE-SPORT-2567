@@ -54,4 +54,16 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        // Get vote history
+        public function getVoteHistory() {
+            try {
+                $sql = "SELECT * FROM `votehis` ORDER BY v_votetime DESC";
+                $query = $this->conn->prepare($sql);
+                $query->execute();
+                return $query;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }
