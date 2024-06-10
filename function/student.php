@@ -162,4 +162,17 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+
+        public function getVotehis($student_ID) {
+            try {
+                $sql = "SELECT * FROM votehis WHERE v_idstudent = :student_ID";
+                $query = $this->conn->prepare($sql);
+                $query->bindParam(":student_ID", $student_ID, PDO::PARAM_STR);
+                $query->execute();
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
     }

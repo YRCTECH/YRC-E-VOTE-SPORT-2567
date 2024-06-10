@@ -123,9 +123,6 @@ $voteHis = $admin->getVoteHistory();
 
             // Start page length 25
             "pageLength": 10,
-
-            // Design css search order and paging
-            
         });
     });
 

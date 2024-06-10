@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 11:45 AM
+-- Generation Time: Jun 10, 2024 at 11:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -3700,7 +3700,7 @@ CREATE TABLE `votehis` (
   `v_idstudent` varchar(255) NOT NULL,
   `v_candidate` varchar(5) NOT NULL,
   `v_color` varchar(10) NOT NULL,
-  `v_votetime` date NOT NULL DEFAULT current_timestamp()
+  `v_votetime` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -3772,7 +3772,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `votehis`
 --
 ALTER TABLE `votehis`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

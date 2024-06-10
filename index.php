@@ -71,7 +71,8 @@ $candidates_num = $candidates->rowCount();
 
             <!-- Status vote -->
             <?php if ($studentData["st_vote"] == 1) { ?>
-                <p class="text-success">สถานะ: <b>เลือกตั้งแล้ว</b></p>
+                <p class="text-success d-block d-md-none">สถานะ: <b>เลือกตั้งแล้ว</b><br>(หมายเลข <?php echo $student->getVotehis($st_ID)["v_candidate"] ?>)</p>
+                <p class="text-success d-none d-md-block">สถานะ: <b>เลือกตั้งแล้ว</b> (หมายเลข <?php echo $student->getVotehis($st_ID)["v_candidate"] ?>)</p>
                 <button class="btn btn-secondary cancel-vote">ยกเลิกการโหวต</button>
             <?php } else { ?>
                 <p class="text-danger">สถานะ: <b>ยังไม่เลือกตั้ง</b></p>
